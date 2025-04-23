@@ -987,28 +987,6 @@
             padding: 15px;
         }
 
-        /* User Info */
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-right: 15px;
-            font-size: 0.9rem;
-        }
-
-        .logout-btn {
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .logout-btn:hover {
-            color: var(--discount-color);
-        }
-
         @media (min-width: 768px) {
             .product-card {
                 min-width: 180px;
@@ -1063,10 +1041,6 @@
             </div>
         </div>
         <div class="nav-icons">
-            <div id="userInfoContainer" class="user-info" style="display: none;">
-                <span id="userName"></span>
-                <button class="logout-btn" id="logoutBtn">تسجيل خروج</button>
-            </div>
             <button class="dark-mode-toggle" id="darkModeToggle">
                 <i class="fas fa-moon"></i>
             </button>
@@ -1253,7 +1227,7 @@
                     isBestSeller: false,
                     hasOffer: true,
                     soldOut: false,
-                    sizes: 'المقاسات: S, M, L',
+                    sizes: 'المقاسات: 2-4 سنوات، 4-6 سنوات',
                     details: 'بنطال أطفال مريح للحركة'
                 },
                 { 
@@ -1264,7 +1238,7 @@
                     isBestSeller: true,
                     hasOffer: false,
                     soldOut: false,
-                    sizes: 'المقاسات: S, M, L',
+                    sizes: 'المقاسات: 6-8 سنوات، 8-10 سنوات',
                     details: 'جاكيت أطفال شتوي دافئ'
                 },
                 { 
@@ -1277,7 +1251,7 @@
                     isBestSeller: false,
                     hasOffer: true,
                     soldOut: true,
-                    sizes: 'المقاسات: S, M',
+                    sizes: 'المقاسات: 24-26، 26-28',
                     details: 'حذاء أطفال مريح وعصري'
                 },
                 { 
@@ -1301,7 +1275,7 @@
                     isBestSeller: true,
                     hasOffer: true,
                     soldOut: false,
-                    sizes: 'المقاسات: S, M',
+                    sizes: 'المقاسات: 20-22، 22-24',
                     details: 'جوارب أطفال قطنية ناعمة'
                 },
                 { 
@@ -1325,7 +1299,7 @@
                     isBestSeller: true,
                     hasOffer: true,
                     soldOut: false,
-                    sizes: 'المقاسات: S, M, L',
+                    sizes: 'المقاسات: 4-6 سنوات، 6-8 سنوات',
                     details: 'بدلة أطفال رسمية أنيقة'
                 }
             ],
@@ -1364,7 +1338,7 @@
                     isBestSeller: true,
                     hasOffer: true,
                     soldOut: false,
-                    sizes: 'المقاسات: S, M, L, XL',
+                    sizes: 'المقاسات: 28-30، 30-32، 32-34',
                     details: 'جينز نسائي عالي الجودة'
                 },
                 { 
@@ -1449,7 +1423,7 @@
                     isBestSeller: false,
                     hasOffer: false,
                     soldOut: false,
-                    sizes: 'المقاسات: S, M, L, XL',
+                    sizes: 'المقاسات: 32-34، 34-36، 36-38',
                     details: 'جينز رجالي كلاسيكي'
                 },
                 { 
@@ -1559,9 +1533,6 @@
         const allProductsGrid = document.getElementById('allProductsGrid');
         const allProductsTitle = document.getElementById('allProductsTitle');
         const productsSection = document.getElementById('products');
-        const userInfoContainer = document.getElementById('userInfoContainer');
-        const userName = document.getElementById('userName');
-        const logoutBtn = document.getElementById('logoutBtn');
         
         // Sound effects
         const clickSound = document.getElementById('clickSound');
@@ -1581,7 +1552,6 @@
             renderProducts();
             updateCart();
             updateWishlist();
-            updateUserInfo();
             setupEventListeners();
             
             // Check if user is logged in
@@ -1590,25 +1560,6 @@
                     openLogin();
                 }, 1000);
             }
-        }
-
-        // Update user info display
-        function updateUserInfo() {
-            if (user) {
-                userInfoContainer.style.display = 'flex';
-                userName.textContent = user.name;
-            } else {
-                userInfoContainer.style.display = 'none';
-            }
-        }
-
-        // Logout function
-        function logout() {
-            playSound(clickSound);
-            user = null;
-            localStorage.removeItem('user');
-            updateUserInfo();
-            showNotification('تم تسجيل الخروج بنجاح');
         }
 
         // Play sound effect
@@ -1926,15 +1877,8 @@
                 };
                 
                 localStorage.setItem('user', JSON.stringify(user));
-                updateUserInfo();
                 closeLogin();
                 showNotification('تم تسجيل الدخول بنجاح!');
-            });
-
-            // Logout button
-            logoutBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                logout();
             });
         }
 
